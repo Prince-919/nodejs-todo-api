@@ -7,6 +7,13 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+app.get("/", (req, res) => {
+  res.status(200).json({
+    success: true,
+    message: "Welcome to Todo API.",
+  });
+});
+
 app.use("/note", noteRouter);
 
 const startServer = async () => {
