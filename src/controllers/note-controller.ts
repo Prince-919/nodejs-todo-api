@@ -8,7 +8,15 @@ export const createNote: RequestHandler = async (req, res) => {
     description: (req.body as IncomingBody).description,
   });
   await newNote.save();
-  res.status(201).json({ message: "Note created successfully." });
+  res
+    .status(201)
+    .json({
+      note: {
+        id: newNote._id,
+        title: newNote.title,
+        description: newNote.description,
+      },
+    });
 };
 
 export const updateNote: RequestHandler = async (req, res) => {
