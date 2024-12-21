@@ -8,15 +8,13 @@ export const createNote: RequestHandler = async (req, res) => {
     description: (req.body as IncomingBody).description,
   });
   await newNote.save();
-  res
-    .status(201)
-    .json({
-      note: {
-        id: newNote._id,
-        title: newNote.title,
-        description: newNote.description,
-      },
-    });
+  res.status(201).json({
+    note: {
+      id: newNote._id,
+      title: newNote.title,
+      description: newNote.description,
+    },
+  });
 };
 
 export const updateNote: RequestHandler = async (req, res) => {
@@ -52,5 +50,13 @@ export const getSingleNote: RequestHandler = async (req, res) => {
 
 export const getAllNotes: RequestHandler = async (req, res) => {
   const notes = await Note.find();
-  res.json({ notes });
+  res.json({
+    notes: notes.map((note) => {
+      return {
+        id: note._id,
+        title: note.title,
+        description: note.description,
+      };
+    }),
+  });
 };
